@@ -1,0 +1,12 @@
+{
+  "cau": {
+    "tn1": { "loai": "chon", "dung": 1, "diem": 2, "nhom": "Khoa học", "giaiThich": "Cá heo nuôi con bằng sữa nên là động vật có vú." },
+    "tn2": { "loai": "chon", "dung": 2, "diem": 2, "nhom": "Toán", "giaiThich": "Tính ngược: 17 trừ 3 bằng 14, 14 chia 2 bằng 7." },
+    "tn3": { "loai": "chon", "dung": 1, "diem": 2, "nhom": "Tiếng Anh", "giaiThich": "“Staff” là nhân viên. Chỉ nhân viên được vào." },
+    "tn4": { "loai": "chon", "dung": 2, "diem": 2, "nhom": "Tiếng Việt", "giaiThich": "Hai vế có ý trái ngược nên dùng “nhưng”." },
+    "tl1": { "loai": "dien", "dapAn": ["two books"], "toiDaTu": 4, "diem": 2, "nhom": "Tiếng Anh", "giaiThich": "Câu thứ hai của thông báo: “borrow two books for one week”." },
+    "tl2": { "loai": "viet", "chapNhan": ["She visited her grandparents last weekend"], "diem": 3, "nhom": "Tiếng Anh", "giaiThich": "“Last weekend” là quá khứ nên động từ là “visited”." },
+    "tl3": { "loai": "dien", "dapAn": ["29"], "diem": 4, "nhom": "Toán", "giaiThich": "Mỗi số hơn số trước 3. Số thứ mười là 2 cộng 9 lần 3, bằng 29." },
+    "tl4": { "loai": "tuluan", "diem": 8, "nhom": "Toán" }
+  }
+}

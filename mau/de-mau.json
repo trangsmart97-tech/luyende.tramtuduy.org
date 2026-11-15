@@ -1,0 +1,29 @@
+{
+  "ma": "de-mau",
+  "tieuDe": "Đề mẫu để thử máy",
+  "phan": [
+    {
+      "ten": "Trắc nghiệm",
+      "phut": 3,
+      "huongDan": "Đây là đề mẫu ngắn để thử trang thi, không phải đề thật.",
+      "muc": [
+        { "loai": "chon", "id": "tn1", "diem": 2, "cau": "Which animal is a mammal?", "luaChon": ["A frog", "A dolphin", "A shark", "A lizard"] },
+        { "loai": "chon", "id": "tn2", "diem": 2, "cau": "A machine doubles a number and then adds 3. The output is 17. What is the input?", "luaChon": ["5", "6", "7", "10"] },
+        { "loai": "chon", "id": "tn3", "diem": 2, "cau": "A sign on a door says: “Staff only”. What does it mean?", "luaChon": ["Everyone can enter.", "Only workers can enter.", "The door is broken.", "The room is empty."] },
+        { "loai": "chon", "id": "tn4", "diem": 2, "cau": "Chọn từ nối đúng: “Trời mưa rất to, … cả lớp vẫn đến đúng giờ.”", "luaChon": ["vì", "nên", "nhưng", "hoặc"] }
+      ]
+    },
+    {
+      "ten": "Tự luận",
+      "phut": 6,
+      "huongDan": "Con làm lần lượt từng câu.",
+      "muc": [
+        { "loai": "doan", "tieuDe": "Read the notice.", "noiDung": "The school library opens at eight o’clock every morning. Students can borrow two books for one week." },
+        { "loai": "dien", "id": "tl1", "diem": 2, "cau": "Students can borrow ____ for one week." },
+        { "loai": "viet", "id": "tl2", "diem": 3, "cau": "Write one complete sentence with the given words. Do not write more than 15 words.", "tuGoiY": "she / visit / grandparents / last weekend" },
+        { "loai": "dien", "id": "tl3", "diem": 4, "cau": "Một dãy số bắt đầu là 2, 5, 8, 11. Số thứ mười của dãy là số nào? Con chỉ viết đáp số." },
+        { "loai": "tuluan", "id": "tl4", "diem": 8, "cau": "Lớp con có 35 bạn. Số bạn nữ nhiều hơn số bạn nam 5 bạn. Hỏi lớp con có bao nhiêu bạn nữ? Con trình bày đầy đủ lời giải." }
+      ]
+    }
+  ]
+}

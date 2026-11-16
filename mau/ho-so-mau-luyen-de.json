@@ -1,0 +1,795 @@
+{
+ "laMau": true,
+ "ten": "Bạn Mẫu",
+ "tuanHienTai": 18,
+ "tongTuan": 18,
+ "capNhat": "05/06/2027",
+ "dichDiem": 85,
+ "baViec": [
+  {
+   "viec": "Nghiên cứu đáp án Đề 14",
+   "viSao": "Con sai 3 câu vì hiểu sai đề. Con che đáp án và làm lại ba câu đó."
+  },
+  {
+   "viec": "Làm phiếu “sửa tận gốc” về lưới thức ăn",
+   "viSao": "Trong 5 đề gần nhất, con sai dạng này 3 lần."
+  },
+  {
+   "viec": "Làm Đề giấy 4 vào chiều thứ Năm",
+   "viSao": "Con tập tô phiếu trả lời và viết tay cho quen tốc độ thi thật."
+  }
+ ],
+ "nhom": [
+  {
+   "ten": "Toán",
+   "soCau": 149,
+   "dung": 132,
+   "dich": 85
+  },
+  {
+   "ten": "Tiếng Anh",
+   "soCau": 145,
+   "dung": 132,
+   "dich": 85
+  },
+  {
+   "ten": "Tiếng Việt",
+   "soCau": 122,
+   "dung": 98,
+   "dich": 85
+  },
+  {
+   "ten": "Khoa học",
+   "soCau": 109,
+   "dung": 97,
+   "dich": 85
+  },
+  {
+   "ten": "Lịch sử và Địa lý",
+   "soCau": 83,
+   "dung": 69,
+   "dich": 85
+  }
+ ],
+ "chuDe": [
+  {
+   "ten": "Tính ngược từ cuối",
+   "nhom": "Toán",
+   "tuan": 1,
+   "trangThai": "vung",
+   "soCau": 9,
+   "dung": 8,
+   "lanCuoi": 9
+  },
+  {
+   "ten": "Sơ đồ đoạn thẳng",
+   "nhom": "Toán",
+   "tuan": 3,
+   "trangThai": "vung",
+   "soCau": 12,
+   "dung": 12,
+   "lanCuoi": 8
+  },
+  {
+   "ten": "Quy luật dãy số",
+   "nhom": "Toán",
+   "tuan": 4,
+   "trangThai": "vung",
+   "soCau": 18,
+   "dung": 17,
+   "lanCuoi": 9
+  },
+  {
+   "ten": "Đếm có hệ thống",
+   "nhom": "Toán",
+   "tuan": 6,
+   "trangThai": "vung",
+   "soCau": 8,
+   "dung": 8,
+   "lanCuoi": 9
+  },
+  {
+   "ten": "Suy luận logic",
+   "nhom": "Toán",
+   "tuan": 7,
+   "trangThai": "vung",
+   "soCau": 14,
+   "dung": 13,
+   "lanCuoi": 9
+  },
+  {
+   "ten": "Diện tích và ghép hình",
+   "nhom": "Toán",
+   "tuan": 9,
+   "trangThai": "on",
+   "soCau": 15,
+   "dung": 10,
+   "lanCuoi": 18,
+   "goiY": "Con làm phiếu “sửa tận gốc” của trạm này vào thứ Sáu."
+  },
+  {
+   "ten": "Giả thiết tạm",
+   "nhom": "Toán",
+   "tuan": 10,
+   "trangThai": "vung",
+   "soCau": 11,
+   "dung": 10,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Rút về đơn vị",
+   "nhom": "Toán",
+   "tuan": 12,
+   "trangThai": "vung",
+   "soCau": 16,
+   "dung": 14,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Máy xử lý số",
+   "nhom": "Toán",
+   "tuan": 13,
+   "trangThai": "vung",
+   "soCau": 10,
+   "dung": 9,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Tổ hợp đơn giản",
+   "nhom": "Toán",
+   "tuan": 15,
+   "trangThai": "vung",
+   "soCau": 12,
+   "dung": 11,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Toán chuyển động",
+   "nhom": "Toán",
+   "tuan": 16,
+   "trangThai": "vung",
+   "soCau": 16,
+   "dung": 14,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Bài toán tuổi",
+   "nhom": "Toán",
+   "tuan": 18,
+   "trangThai": "luyen",
+   "soCau": 8,
+   "dung": 6,
+   "lanCuoi": 18,
+   "goiY": "Con làm phiếu “sửa tận gốc” của trạm này vào thứ Sáu."
+  },
+  {
+   "ten": "Thì hiện tại đơn",
+   "nhom": "Tiếng Anh",
+   "tuan": 1,
+   "trangThai": "vung",
+   "soCau": 9,
+   "dung": 9,
+   "lanCuoi": 9
+  },
+  {
+   "ten": "Thì quá khứ đơn",
+   "nhom": "Tiếng Anh",
+   "tuan": 3,
+   "trangThai": "vung",
+   "soCau": 9,
+   "dung": 9,
+   "lanCuoi": 8
+  },
+  {
+   "ten": "Biến đổi từ loại",
+   "nhom": "Tiếng Anh",
+   "tuan": 4,
+   "trangThai": "vung",
+   "soCau": 15,
+   "dung": 14,
+   "lanCuoi": 9
+  },
+  {
+   "ten": "Đọc biển báo",
+   "nhom": "Tiếng Anh",
+   "tuan": 6,
+   "trangThai": "vung",
+   "soCau": 12,
+   "dung": 12,
+   "lanCuoi": 9
+  },
+  {
+   "ten": "Tìm ý chính",
+   "nhom": "Tiếng Anh",
+   "tuan": 7,
+   "trangThai": "vung",
+   "soCau": 17,
+   "dung": 16,
+   "lanCuoi": 8
+  },
+  {
+   "ten": "Tìm chi tiết",
+   "nhom": "Tiếng Anh",
+   "tuan": 9,
+   "trangThai": "vung",
+   "soCau": 10,
+   "dung": 9,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Đoán nghĩa của từ",
+   "nhom": "Tiếng Anh",
+   "tuan": 10,
+   "trangThai": "luyen",
+   "soCau": 16,
+   "dung": 11,
+   "lanCuoi": 18,
+   "goiY": "Con làm phiếu “sửa tận gốc” của trạm này vào thứ Sáu."
+  },
+  {
+   "ten": "Dựng câu từ từ gợi ý",
+   "nhom": "Tiếng Anh",
+   "tuan": 12,
+   "trangThai": "vung",
+   "soCau": 8,
+   "dung": 7,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Thì hiện tại hoàn thành",
+   "nhom": "Tiếng Anh",
+   "tuan": 13,
+   "trangThai": "vung",
+   "soCau": 11,
+   "dung": 10,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "So sánh",
+   "nhom": "Tiếng Anh",
+   "tuan": 15,
+   "trangThai": "vung",
+   "soCau": 15,
+   "dung": 14,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Từ nối",
+   "nhom": "Tiếng Anh",
+   "tuan": 16,
+   "trangThai": "vung",
+   "soCau": 11,
+   "dung": 10,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Suy luận khi đọc",
+   "nhom": "Tiếng Anh",
+   "tuan": 18,
+   "trangThai": "vung",
+   "soCau": 12,
+   "dung": 11,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Từ nối câu",
+   "nhom": "Tiếng Việt",
+   "tuan": 1,
+   "trangThai": "vung",
+   "soCau": 9,
+   "dung": 9,
+   "lanCuoi": 9
+  },
+  {
+   "ten": "Nghĩa của từ trong ngữ cảnh",
+   "nhom": "Tiếng Việt",
+   "tuan": 3,
+   "trangThai": "vung",
+   "soCau": 10,
+   "dung": 9,
+   "lanCuoi": 8
+  },
+  {
+   "ten": "Thành ngữ, tục ngữ",
+   "nhom": "Tiếng Việt",
+   "tuan": 5,
+   "trangThai": "vung",
+   "soCau": 16,
+   "dung": 15,
+   "lanCuoi": 9
+  },
+  {
+   "ten": "Biện pháp so sánh",
+   "nhom": "Tiếng Việt",
+   "tuan": 7,
+   "trangThai": "vung",
+   "soCau": 11,
+   "dung": 11,
+   "lanCuoi": 8
+  },
+  {
+   "ten": "Biện pháp nhân hoá",
+   "nhom": "Tiếng Việt",
+   "tuan": 9,
+   "trangThai": "luyen",
+   "soCau": 15,
+   "dung": 10,
+   "lanCuoi": 18,
+   "goiY": "Con làm phiếu “sửa tận gốc” của trạm này vào thứ Sáu."
+  },
+  {
+   "ten": "Tìm thông điệp",
+   "nhom": "Tiếng Việt",
+   "tuan": 10,
+   "trangThai": "luyen",
+   "soCau": 14,
+   "dung": 10,
+   "lanCuoi": 18,
+   "goiY": "Con làm phiếu “sửa tận gốc” của trạm này vào thứ Sáu."
+  },
+  {
+   "ten": "Đoạn nêu ý kiến",
+   "nhom": "Tiếng Việt",
+   "tuan": 12,
+   "trangThai": "on",
+   "soCau": 9,
+   "dung": 6,
+   "lanCuoi": 18,
+   "goiY": "Con làm phiếu “sửa tận gốc” của trạm này vào thứ Sáu."
+  },
+  {
+   "ten": "Đoạn kể sáng tạo",
+   "nhom": "Tiếng Việt",
+   "tuan": 14,
+   "trangThai": "luyen",
+   "soCau": 13,
+   "dung": 9,
+   "lanCuoi": 18,
+   "goiY": "Con làm phiếu “sửa tận gốc” của trạm này vào thứ Sáu."
+  },
+  {
+   "ten": "Dấu câu",
+   "nhom": "Tiếng Việt",
+   "tuan": 16,
+   "trangThai": "luyen",
+   "soCau": 16,
+   "dung": 11,
+   "lanCuoi": 18,
+   "goiY": "Con làm phiếu “sửa tận gốc” của trạm này vào thứ Sáu."
+  },
+  {
+   "ten": "Nêu ý kiến kèm lý do",
+   "nhom": "Tiếng Việt",
+   "tuan": 18,
+   "trangThai": "vung",
+   "soCau": 9,
+   "dung": 8,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Lưới thức ăn",
+   "nhom": "Khoa học",
+   "tuan": 1,
+   "trangThai": "on",
+   "soCau": 6,
+   "dung": 5,
+   "lanCuoi": 4,
+   "goiY": "Con làm lại 5 câu của trạm này trong phiếu “Tự rà soát tuần”."
+  },
+  {
+   "ten": "Phân loại động vật",
+   "nhom": "Khoa học",
+   "tuan": 3,
+   "trangThai": "vung",
+   "soCau": 16,
+   "dung": 15,
+   "lanCuoi": 8
+  },
+  {
+   "ten": "Sinh sản của động vật",
+   "nhom": "Khoa học",
+   "tuan": 5,
+   "trangThai": "vung",
+   "soCau": 18,
+   "dung": 17,
+   "lanCuoi": 9
+  },
+  {
+   "ten": "Năng lượng",
+   "nhom": "Khoa học",
+   "tuan": 7,
+   "trangThai": "on",
+   "soCau": 8,
+   "dung": 6,
+   "lanCuoi": 7,
+   "goiY": "Con làm lại 5 câu của trạm này trong phiếu “Tự rà soát tuần”."
+  },
+  {
+   "ten": "Tính chất của chất",
+   "nhom": "Khoa học",
+   "tuan": 9,
+   "trangThai": "vung",
+   "soCau": 12,
+   "dung": 11,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Cơ thể người",
+   "nhom": "Khoa học",
+   "tuan": 10,
+   "trangThai": "vung",
+   "soCau": 8,
+   "dung": 7,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Vòng tuần hoàn của nước",
+   "nhom": "Khoa học",
+   "tuan": 12,
+   "trangThai": "luyen",
+   "soCau": 8,
+   "dung": 6,
+   "lanCuoi": 18,
+   "goiY": "Con làm phiếu “sửa tận gốc” của trạm này vào thứ Sáu."
+  },
+  {
+   "ten": "Ánh sáng và bóng",
+   "nhom": "Khoa học",
+   "tuan": 14,
+   "trangThai": "vung",
+   "soCau": 8,
+   "dung": 7,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Lực và chuyển động",
+   "nhom": "Khoa học",
+   "tuan": 16,
+   "trangThai": "vung",
+   "soCau": 14,
+   "dung": 13,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Thực vật",
+   "nhom": "Khoa học",
+   "tuan": 18,
+   "trangThai": "vung",
+   "soCau": 11,
+   "dung": 10,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Đọc bản đồ",
+   "nhom": "Lịch sử và Địa lý",
+   "tuan": 1,
+   "trangThai": "vung",
+   "soCau": 11,
+   "dung": 10,
+   "lanCuoi": 9
+  },
+  {
+   "ten": "Bán cầu và đại dương",
+   "nhom": "Lịch sử và Địa lý",
+   "tuan": 3,
+   "trangThai": "on",
+   "soCau": 8,
+   "dung": 5,
+   "lanCuoi": 4,
+   "goiY": "Con làm lại 5 câu của trạm này trong phiếu “Tự rà soát tuần”."
+  },
+  {
+   "ten": "Đông Nam Á",
+   "nhom": "Lịch sử và Địa lý",
+   "tuan": 6,
+   "trangThai": "vung",
+   "soCau": 8,
+   "dung": 8,
+   "lanCuoi": 8
+  },
+  {
+   "ten": "Các mốc lớn của Việt Nam",
+   "nhom": "Lịch sử và Địa lý",
+   "tuan": 8,
+   "trangThai": "luyen",
+   "soCau": 12,
+   "dung": 8,
+   "lanCuoi": 18,
+   "goiY": "Con làm phiếu “sửa tận gốc” của trạm này vào thứ Sáu."
+  },
+  {
+   "ten": "Văn minh thế giới",
+   "nhom": "Lịch sử và Địa lý",
+   "tuan": 11,
+   "trangThai": "vung",
+   "soCau": 12,
+   "dung": 11,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Suy luận từ đoạn kể",
+   "nhom": "Lịch sử và Địa lý",
+   "tuan": 13,
+   "trangThai": "vung",
+   "soCau": 14,
+   "dung": 13,
+   "lanCuoi": 18
+  },
+  {
+   "ten": "Khí hậu và thiên nhiên",
+   "nhom": "Lịch sử và Địa lý",
+   "tuan": 16,
+   "trangThai": "luyen",
+   "soCau": 9,
+   "dung": 6,
+   "lanCuoi": 18,
+   "goiY": "Con làm phiếu “sửa tận gốc” của trạm này vào thứ Sáu."
+  },
+  {
+   "ten": "Thành phố Hồ Chí Minh",
+   "nhom": "Lịch sử và Địa lý",
+   "tuan": 18,
+   "trangThai": "vung",
+   "soCau": 9,
+   "dung": 8,
+   "lanCuoi": 18
+  }
+ ],
+ "kyNang": [
+  {
+   "ten": "Đọc kỹ đề",
+   "trangThai": "vung",
+   "ghiChu": "Ba bài gần nhất con không hiểu sai đề câu nào."
+  },
+  {
+   "ten": "Đọc hình và biểu đồ",
+   "trangThai": "luyen",
+   "ghiChu": "Con đọc tốt bảng số, còn vướng ở sơ đồ lưới thức ăn."
+  },
+  {
+   "ten": "Loại trừ phương án",
+   "trangThai": "vung"
+  },
+  {
+   "ten": "Kiểm tra lại đáp số",
+   "trangThai": "on",
+   "ghiChu": "Hai bài gần nhất con chưa kiểm tra lại."
+  },
+  {
+   "ten": "Trình bày lời giải",
+   "trangThai": "luyen"
+  },
+  {
+   "ten": "Chia giờ cho ba bài tự luận",
+   "trangThai": "moi"
+  },
+  {
+   "ten": "Soát bài ba phút cuối",
+   "trangThai": "moi"
+  }
+ ],
+ "diemMoc": [
+  {
+   "ten": "Đầu vào",
+   "nhan": "Đầu vào",
+   "ngay": "09/12/2026",
+   "diem": 58
+  },
+  {
+   "ten": "Mốc 1",
+   "nhan": "M1",
+   "ngay": "09/01/2027",
+   "diem": 66
+  },
+  {
+   "ten": "Mốc 2",
+   "nhan": "M2",
+   "ngay": "30/01/2027",
+   "diem": 73
+  },
+  {
+   "ten": "Mốc 3",
+   "nhan": "M3",
+   "ngay": "13/03/2027",
+   "diem": 76
+  },
+  {
+   "ten": "Mốc 4",
+   "nhan": "M4",
+   "ngay": "10/04/2027",
+   "diem": 80
+  },
+  {
+   "ten": "Mốc 5",
+   "nhan": "M5",
+   "ngay": "01/05/2027",
+   "diem": 79
+  },
+  {
+   "ten": "Đề 1",
+   "nhan": "Đ1",
+   "ngay": "03/05/2027",
+   "diem": 78
+  },
+  {
+   "ten": "Đề 2",
+   "nhan": "Đ2",
+   "ngay": "05/05/2027",
+   "diem": 81
+  },
+  {
+   "ten": "Đề 3",
+   "nhan": "Đ3",
+   "ngay": "08/05/2027",
+   "diem": 77
+  },
+  {
+   "ten": "Đề 4",
+   "nhan": "Đ4",
+   "ngay": "10/05/2027",
+   "diem": 83
+  },
+  {
+   "ten": "Đề 5",
+   "nhan": "Đ5",
+   "ngay": "12/05/2027",
+   "diem": 80
+  },
+  {
+   "ten": "Đề 6",
+   "nhan": "Đ6",
+   "ngay": "15/05/2027",
+   "diem": 84
+  },
+  {
+   "ten": "Đề 7",
+   "nhan": "Đ7",
+   "ngay": "17/05/2027",
+   "diem": 79
+  },
+  {
+   "ten": "Đề 8",
+   "nhan": "Đ8",
+   "ngay": "19/05/2027",
+   "diem": 82
+  },
+  {
+   "ten": "Đề 9",
+   "nhan": "Đ9",
+   "ngay": "22/05/2027",
+   "diem": 86
+  },
+  {
+   "ten": "Đề 10",
+   "nhan": "Đ10",
+   "ngay": "24/05/2027",
+   "diem": 81
+  },
+  {
+   "ten": "Đề 11",
+   "nhan": "Đ11",
+   "ngay": "26/05/2027",
+   "diem": 85
+  },
+  {
+   "ten": "Đề 12",
+   "nhan": "Đ12",
+   "ngay": "29/05/2027",
+   "diem": 83
+  },
+  {
+   "ten": "Đề 13",
+   "nhan": "Đ13",
+   "ngay": "31/05/2027",
+   "diem": 87
+  },
+  {
+   "ten": "Đề 14",
+   "nhan": "Đ14",
+   "ngay": "02/06/2027",
+   "diem": 88
+  }
+ ],
+ "loiNhan": "Mười bốn đề vừa qua con giữ được nhịp tăng đều. Việc quan trọng nhất của con lúc này là đọc kỹ đề: con gạch chân từ khoá trước khi làm.",
+ "nhatKy": [
+  {
+   "ngay": "02/06",
+   "bai": "Đề 14",
+   "ketQua": "88 trên 100",
+   "ghiChu": "Hiểu sai đề 3 câu, tính sai 1 câu"
+  },
+  {
+   "ngay": "01/06",
+   "bai": "Đề giấy 3",
+   "ketQua": "82, con tự chấm",
+   "ghiChu": ""
+  },
+  {
+   "ngay": "31/05",
+   "bai": "Đề 13",
+   "ketQua": "87 trên 100",
+   "ghiChu": "Rời trang thi 1 lần"
+  },
+  {
+   "ngay": "29/05",
+   "bai": "Đề 12",
+   "ketQua": "83 trên 100",
+   "ghiChu": "Hết giờ ở bài Toán 3"
+  }
+ ],
+ "barem": [
+  {
+   "bai": "Đề 14, bài Toán 3: trình bày lời giải",
+   "ngay": "02/06/2027",
+   "diem": 6.5,
+   "toiDa": 8,
+   "ghiChu": "Barem tạm, chờ đối chiếu với hướng dẫn chấm của Sở.",
+   "tieuChi": [
+    {
+     "ten": "Tóm tắt và hướng giải",
+     "diem": 2,
+     "toiDa": 2
+    },
+    {
+     "ten": "Các bước tính đúng",
+     "diem": 3,
+     "toiDa": 4
+    },
+    {
+     "ten": "Lời giải và đáp số",
+     "diem": 1.5,
+     "toiDa": 2
+    }
+   ],
+   "nhanXet": "Con chọn đúng cách giải. Con viết thiếu lời giải ở bước hai."
+  },
+  {
+   "bai": "Bài viết tuần 7: đoạn nêu ý kiến",
+   "ngay": "28/01/2027",
+   "diem": 8.5,
+   "toiDa": 12,
+   "ghiChu": "Barem tạm, chờ đối chiếu với hướng dẫn chấm của Sở.",
+   "tieuChi": [
+    {
+     "ten": "Đúng yêu cầu của đề",
+     "diem": 2.5,
+     "toiDa": 3
+    },
+    {
+     "ten": "Ý kiến rõ, có lý do",
+     "diem": 3,
+     "toiDa": 4
+    },
+    {
+     "ten": "Diễn đạt, dùng từ, câu",
+     "diem": 2,
+     "toiDa": 3
+    },
+    {
+     "ten": "Chính tả và trình bày",
+     "diem": 1,
+     "toiDa": 2
+    }
+   ],
+   "nhanXet": "Con nêu ý kiến rõ ngay câu đầu. Lần sau con thêm một ví dụ cụ thể cho lý do thứ hai."
+  }
+ ],
+ "chang": "Chặng luyện đề, sau Đề 14",
+ "tuCham": [
+  {
+   "ten": "Đề giấy 1",
+   "ngay": "25/05/2027",
+   "diem": 80
+  },
+  {
+   "ten": "Đề giấy 2",
+   "ngay": "27/05/2027",
+   "diem": 84
+  },
+  {
+   "ten": "Đề giấy 3",
+   "ngay": "01/06/2027",
+   "diem": 82
+  }
+ ]
+}

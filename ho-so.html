@@ -103,10 +103,28 @@
   </section>
 
   <section id="s-diem" hidden>
-    <h2>Điểm các bài mốc</h2>
+    <h2>Điểm các bài thi trên web</h2>
     <p class="phu" id="diem-phu"></p>
-    <div class="bieu-do"><svg id="bieu-do" viewBox="0 0 720 260" role="img" aria-label="Điểm các bài mốc theo thời gian" style="width:100%;height:auto"></svg><div id="goi-y" hidden></div></div>
+    <div class="bieu-do"><svg id="bieu-do" viewBox="0 0 720 260" role="img" aria-label="Điểm bài đầu vào, các bài mốc và các đề thực chiến theo thời gian" style="width:100%;height:auto"></svg><div id="goi-y" hidden></div></div>
     <details><summary>Xem dạng bảng</summary><table class="bang" id="bang-diem"></table></details>
+  </section>
+
+  <section id="s-barem" hidden>
+    <h2>Bài viết và lời giải Toán</h2>
+    <p class="phu">Cô Trang chấm các bài này theo barem. Mỗi dòng là một tiêu chí của barem.</p>
+    <div id="barem"></div>
+  </section>
+
+  <section id="s-tu" hidden>
+    <h2>Con tự đánh giá</h2>
+    <p class="phu">Đây là điểm con tự chấm ở các đề giấy. Phần này để con và ba mẹ theo dõi, không dùng để xếp trạng thái các trạm.</p>
+    <table class="bang" id="tu-cham"></table>
+  </section>
+
+  <section id="s-nhat-ky" hidden>
+    <h2>Nhật ký bài làm gần đây</h2>
+    <p class="phu">Mọi bài con làm trên web đều được ghi lại ở đây.</p>
+    <table class="bang" id="nhat-ky"></table>
   </section>
 
   <section id="s-loi" hidden>
@@ -138,7 +156,7 @@
   function ve(d) {
     document.title = "Hồ sơ của " + d.ten + " – Trạm Tư Duy";
     $("ten").textContent = "Hồ sơ học tập của " + d.ten;
-    $("phu-de").textContent = "Tuần " + d.tuanHienTai + " trên " + d.tongTuan + ". Cập nhật ngày " + d.capNhat + ".";
+    $("phu-de").textContent = (d.chang || ("Tuần " + d.tuanHienTai + " trên " + d.tongTuan)) + ". Cập nhật ngày " + d.capNhat + ".";
     if (d.laMau) bao("Đây là hồ sơ mẫu với số liệu giả, để cô, ba mẹ và các con xem trước cách trình bày.");
 
     // Ba việc
@@ -200,6 +218,22 @@
     hien("s-ky-nang");
 
     veDiem(d);
+    (d.barem || []).forEach(function (b) {
+      var k = tao("div"); k.style.cssText = "border:1px solid var(--vien);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:#fff";
+      var so = function (v) { return String(v).replace(".", ","); };
+      k.appendChild(tao("b", b.bai + "  (" + b.ngay + "): " + so(b.diem) + " trên " + so(b.toiDa) + " điểm"));
+      var t = tao("table", null, "bang");
+      b.tieuChi.forEach(function (c) { var tr = tao("tr"); tr.appendChild(tao("td", c.ten)); tr.appendChild(tao("td", so(c.diem) + " trên " + so(c.toiDa))); t.appendChild(tr); });
+      k.appendChild(t); if (b.nhanXet) k.appendChild(tao("p", "Cô nhận xét: " + b.nhanXet)); if (b.ghiChu) k.appendChild(tao("p", b.ghiChu, "phu"));
+      $("barem").appendChild(k);
+    });
+    if ((d.barem || []).length) hien("s-barem");
+    function bang(id, cot, ds, lay) {
+      var b = $(id), hd = tao("tr"); cot.forEach(function (c) { hd.appendChild(tao("th", c)); }); b.appendChild(hd);
+      ds.forEach(function (m) { var tr = tao("tr"); lay(m).forEach(function (c) { tr.appendChild(tao("td", String(c))); }); b.appendChild(tr); });
+    }
+    if ((d.tuCham || []).length) { bang("tu-cham", ["Đề giấy", "Ngày", "Điểm con tự chấm"], d.tuCham, function (m) { return [m.ten, m.ngay, m.diem + " trên 100"]; }); hien("s-tu"); }
+    if ((d.nhatKy || []).length) { bang("nhat-ky", ["Ngày", "Bài", "Kết quả", "Ghi chú"], d.nhatKy, function (m) { return [m.ngay, m.bai, m.ketQua, m.ghiChu || ""]; }); hien("s-nhat-ky"); }
     if (d.loiNhan) { $("loi-nhan").textContent = d.loiNhan; hien("s-loi"); }
     $("chan").textContent = "Hồ sơ chỉ so con với chính con và với đích của con. Trạm Tư Duy không xếp hạng các bạn trong lớp.";
   }
@@ -229,8 +263,9 @@
     var goiY = $("goi-y");
     ds.forEach(function (m, i) {
       s.appendChild(svg("circle", { cx: x(i), cy: y(m.diem), r: 5, fill: "#0f6e6e", stroke: "#fcfcfb", "stroke-width": 2 }));
-      var tv = svg("text", { x: x(i), y: y(m.diem) - 12, "text-anchor": "middle", style: "fill:#1f2a37;font-weight:700" }); tv.textContent = m.diem; s.appendChild(tv);
-      var tn = svg("text", { x: x(i), y: C - 14, "text-anchor": "middle" }); tn.textContent = m.ten; s.appendChild(tn);
+      var buoc = Math.ceil(ds.length / 8), dauCuoi = i === 0 || i === ds.length - 1;
+      if (ds.length <= 6 || dauCuoi) { var tv = svg("text", { x: x(i), y: y(m.diem) - 12, "text-anchor": "middle", style: "fill:#1f2a37;font-weight:700" }); tv.textContent = m.diem; s.appendChild(tv); }
+      if (i % buoc === 0 || i === ds.length - 1) { var tn = svg("text", { x: x(i), y: C - 14, "text-anchor": "middle" }); tn.textContent = m.nhan || m.ten; s.appendChild(tn); }
       var vung = svg("circle", { cx: x(i), cy: y(m.diem), r: 22, fill: "transparent", tabindex: 0 });
       var mo = function () { goiY.textContent = m.ten + ", " + m.ngay + ": " + m.diem + " điểm"; goiY.hidden = false;
         var kt = s.getBoundingClientRect(); goiY.style.left = Math.max(0, x(i) / R * kt.width - 60) + "px"; goiY.style.top = (y(m.diem) / C * kt.height - 52) + "px"; };
@@ -249,8 +284,8 @@
 
   var ma = new URLSearchParams(location.search).get("ma") || "";
   if (!/^[A-Za-z0-9-]{3,64}$/.test(ma)) { bao("Đường dẫn chưa có mã hồ sơ. Ba mẹ dùng đúng đường dẫn cô Trang đã gửi nhé."); return; }
-  var nguon = ma === "mau"
-    ? fetch("mau/ho-so-mau.json", { cache: "no-cache" }).then(function (r) { return r.json(); })
+  var nguon = /^mau(-[a-z-]+)?$/.test(ma)
+    ? fetch("mau/ho-so-" + ma + ".json", { cache: "no-cache" }).then(function (r) { return r.json(); })
     : fetch(CAU_HINH.khoKin, { method: "POST", body: JSON.stringify({ hanhDong: "hoSo", ma: ma }) }).then(function (r) { return r.json(); })
         .then(function (d) { if (d.loi) throw new Error(d.loi); return d; });
   nguon.then(ve).catch(function () { bao("Chưa mở được hồ sơ. Ba mẹ kiểm tra lại đường dẫn hoặc báo cô Trang giúp."); });

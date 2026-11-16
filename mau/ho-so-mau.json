@@ -586,5 +586,63 @@
    "diem": 73
   }
  ],
- "loiNhan": "Con tiến bộ đều qua ba bài, cô rất vui. Tuần này cô mong con tập thói quen kiểm tra lại đáp số ở mọi bài Toán. Mỗi lần kiểm tra chỉ mất nửa phút."
+ "loiNhan": "Con tiến bộ đều qua ba bài, cô rất vui. Tuần này cô mong con tập thói quen kiểm tra lại đáp số ở mọi bài Toán. Mỗi lần kiểm tra chỉ mất nửa phút.",
+ "nhatKy": [
+  {
+   "ngay": "21/02",
+   "bai": "Thực chiến Chủ nhật tuần 8",
+   "ketQua": "12 trên 15 câu",
+   "ghiChu": "Làm trên lớp"
+  },
+  {
+   "ngay": "20/02",
+   "bai": "Tầng 3, Toán tuần 8 phiếu 1",
+   "ketQua": "5 trên 6 câu",
+   "ghiChu": "7 phút"
+  },
+  {
+   "ngay": "18/02",
+   "bai": "Bài viết tuần 8",
+   "ketQua": "Đã nộp, chờ cô chấm",
+   "ghiChu": ""
+  },
+  {
+   "ngay": "17/02",
+   "bai": "Tầng 3, Tiếng Việt tuần 8 phiếu 1",
+   "ketQua": "Chưa làm",
+   "ghiChu": "Con nhớ làm trước thứ Sáu"
+  }
+ ],
+ "barem": [
+  {
+   "bai": "Bài viết tuần 7: đoạn nêu ý kiến",
+   "ngay": "28/01/2027",
+   "diem": 8.5,
+   "toiDa": 12,
+   "ghiChu": "Barem tạm, chờ đối chiếu với hướng dẫn chấm của Sở.",
+   "tieuChi": [
+    {
+     "ten": "Đúng yêu cầu của đề",
+     "diem": 2.5,
+     "toiDa": 3
+    },
+    {
+     "ten": "Ý kiến rõ, có lý do",
+     "diem": 3,
+     "toiDa": 4
+    },
+    {
+     "ten": "Diễn đạt, dùng từ, câu",
+     "diem": 2,
+     "toiDa": 3
+    },
+    {
+     "ten": "Chính tả và trình bày",
+     "diem": 1,
+     "toiDa": 2
+    }
+   ],
+   "nhanXet": "Con nêu ý kiến rõ ngay câu đầu. Lần sau con thêm một ví dụ cụ thể cho lý do thứ hai."
+  }
+ ]
 }

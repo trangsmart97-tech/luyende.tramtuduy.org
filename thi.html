@@ -236,7 +236,9 @@
     return ds;
   }
   function moLucPhan() { var t = Date.parse(phanNay().moLuc || ""); return isNaN(t) ? 0 : t; }
-  function hetGioPhan() { return Math.min(Math.max(tt.batDauPhan, moLucPhan()) + phanNay().phut * 60000, tt.dong); }
+  // Phần có "dongLuc": phần ấy đóng đúng giờ đó cho mọi bạn, kể cả bạn vào muộn (ví dụ để cả lớp cùng sang phần nghe).
+  function dongLucPhan() { var t = Date.parse(phanNay().dongLuc || ""); return isNaN(t) ? Infinity : t; }
+  function hetGioPhan() { return Math.min(Math.max(tt.batDauPhan, moLucPhan()) + phanNay().phut * 60000, tt.dong, dongLucPhan()); }
 
   function napTep(ten, phanTu, thuoc) {
     var dat = function (url) { phanTu[thuoc] = url; };
@@ -478,7 +480,20 @@
     (kq.de || tt.de).phan.forEach(function (p) {
       var so = 0; khu.appendChild(tao("h3", p.ten));
       p.muc.forEach(function (m) {
-        if (m.loai === "doan") return; so += 1;
+        if (m.loai === "doan") {
+          // Bài đọc hiện lại để con đọc khi xem lời giải. Chỉ lấy từ bản máy chủ gửi kèm kết quả (kq.de):
+          // máy chủ đã bỏ khối "anSauThi" và bản ghi nghe. Không dùng bản đề trong bộ nhớ của trang.
+          if (kq.de) {
+            var o = tao("div", null, "doan");
+            if (m.tieuDe) o.appendChild(tao("h3", m.tieuDe));
+            if (m.noiDung) o.appendChild(document.createTextNode(m.noiDung));
+            if (m.nguon) o.appendChild(tao("div", "Nguồn: " + m.nguon, "ghichu"));
+            if (m.hinh) { var hb = tao("img"); hb.alt = "Hình của bài đọc"; napTep(m.hinh, hb, "src"); o.appendChild(hb); }
+            khu.appendChild(o);
+          }
+          return;
+        }
+        so += 1;
         var c = kq.chiTiet[m.id]; if (!c || c.choCham) return;
         var da = c.dapAn;
         if (m.loai === "chon") {

@@ -183,7 +183,11 @@
       $("ten-de").textContent = d.tieuDe; document.title = d.tieuDe + " – Trạm Tư Duy";
       $("mo-ta").textContent = "Con kiểm tra tên của mình, rồi bấm “Bắt đầu làm bài”.";
       $("chao").textContent = "Chào con " + d.hoTen + "."; $("chao").hidden = false;
-      $("gio-thi").textContent = "Đề mở lúc " + gioPhut(d.mo) + ", đóng lúc " + gioPhut(d.dong) + "."; $("gio-thi").hidden = false;
+      // Đề có giờ bắt đầu muộn nhất (QĐ-018): mỗi con có đủ giờ tính từ lúc con bắt đầu.
+      $("gio-thi").textContent = d.batDauMuonNhat
+        ? "Đề mở lúc " + gioPhut(d.mo) + ". Con bắt đầu làm bài trước " + gioPhut(d.batDauMuonNhat) + ". Thời gian làm bài của con tính từ lúc con bấm “Bắt đầu làm bài”."
+        : "Đề mở lúc " + gioPhut(d.mo) + ", đóng lúc " + gioPhut(d.dong) + ".";
+      $("gio-thi").hidden = false;
       $("khu-ma-phong").hidden = !d.coMaPhong;
       if (d.daNop) { $("nut-vao").textContent = "Xem kết quả"; }
       else if (d.daBatDau) { $("nut-vao").textContent = "Làm tiếp bài của con"; }
@@ -240,7 +244,14 @@
   function moLucPhan() { var t = Date.parse(phanNay().moLuc || ""); return isNaN(t) ? 0 : t; }
   // Phần có "dongLuc": phần ấy đóng đúng giờ đó cho mọi bạn, kể cả bạn vào muộn (ví dụ để cả lớp cùng sang phần nghe).
   function dongLucPhan() { var t = Date.parse(phanNay().dongLuc || ""); return isNaN(t) ? Infinity : t; }
-  function hetGioPhan() { return Math.min(Math.max(tt.batDauPhan, moLucPhan()) + phanNay().phut * 60000, tt.dong, dongLucPhan()); }
+  // Phần cuối có giờ gửi ảnh: giờ làm bài hết chậm nhất ở giờ đóng đề trừ số phút gửi ảnh, để mọi bạn (kể cả bạn vào muộn)
+  // đều còn đủ số phút gửi ảnh trước giờ đóng.
+  function hetGioPhan() {
+    var het = Math.min(Math.max(tt.batDauPhan, moLucPhan()) + phanNay().phut * 60000, tt.dong, dongLucPhan());
+    return phutNopAnh() > 0 ? Math.min(het, tt.dong - phutNopAnh() * 60000) : het;
+  }
+  // Tên câu như trong đề ("tenCau", ví dụ “Bài 3”); không có thì “Câu N”.
+  function tenCau(m, so) { return m.tenCau ? String(m.tenCau) : "Câu " + so; }
 
   function napTep(ten, phanTu, thuoc) {
     var dat = function (url) { phanTu[thuoc] = url; };
@@ -274,7 +285,7 @@
 
   function dungCau(m, so) {
     var o = tao("div", null, "cau"); o.id = "cau-" + m.id;
-    var dau = tao("div", null, "so"); dau.appendChild(tao("span", "Câu " + so + (m.diem ? "  (" + m.diem + " điểm)" : "")));
+    var dau = tao("div", null, "so"); dau.appendChild(tao("span", tenCau(m, so) + (m.diem ? "  (" + m.diem + " điểm)" : "")));
     var nd = tao("button", "Đánh dấu xem lại", "nut phu"); nd.type = "button";
     nd.addEventListener("click", function () { tt.danhDau[m.id] = !tt.danhDau[m.id]; veBangCau(); });
     dau.appendChild(nd); o.appendChild(dau);
@@ -321,7 +332,9 @@
       var o2 = tao("input"); o2.type = "text"; o2.autocomplete = "off"; o2.spellcheck = false;
       o2.value = tt.traLoi[m.id] || ""; o2.addEventListener("input", function () { ghi(o2.value); }); o.appendChild(o2);
     } else if (m.loai === "tuluan") {
-      o.appendChild(tao("p", "Con chọn một trong hai cách: gõ bài vào khung, hoặc làm trên giấy rồi nộp ảnh. Con cũng dùng được cả hai.", "ghichu"));
+      o.appendChild(tao("p", m.canAnh
+        ? "Câu này con viết trên giấy, rồi chụp và gửi ảnh. Con vẫn gõ được vào khung nếu muốn."
+        : "Con chọn một trong hai cách: gõ bài vào khung, hoặc làm trên giấy rồi nộp ảnh. Con cũng dùng được cả hai.", "ghichu"));
       var ta = tao("textarea"); ta.spellcheck = false; ta.value = tt.traLoi[m.id] || "";
       ta.addEventListener("input", function () { ghi(ta.value); });
       ["paste", "drop"].forEach(function (s) { ta.addEventListener(s, function (e) { e.preventDefault(); }); });
@@ -398,9 +411,10 @@
       nd.appendChild(tao("h2", "Phần này mở lúc " + new Date(moLucPhan()).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" }) + "."));
       nd.appendChild(tao("p", "Con chờ cùng cả lớp. Đến giờ, đề tự hiện ra. Trong lúc chờ, con không được quay lại phần trước.", "ghichu"));
       var cho = function () {
-        var con = Math.max(0, Math.round((moLucPhan() - nayMayChu()) / 1000));
+        // So bằng mili giây: làm tròn giây có thể ra 0 khi còn dưới nửa giây, khi ấy moPhan lại vào màn hình chờ và gọi cho() mãi.
+        var conMs = moLucPhan() - nayMayChu(), con = Math.max(0, Math.ceil(conMs / 1000));
         $("dong-ho").textContent = ("0" + Math.floor(con / 60)).slice(-2) + ":" + ("0" + con % 60).slice(-2);
-        if (con <= 0) moPhan();
+        if (conMs <= 0) moPhan();
       };
       henGio = setInterval(cho, 500); cho(); window.scrollTo(0, 0); return;
     }
@@ -454,15 +468,19 @@
   }
   function capNhatNhacAnh() {
     if (!tt || !tt.khoaLuc) return;
-    var thieu = [], so = 0;
+    // Chỉ nhắc câu tự luận cần ảnh ("canAnh": true; phần không đánh dấu câu nào thì xét mọi câu tự luận)
+    // mà con chưa gửi ảnh và cũng chưa gõ gì.
+    var thieu = [], so = 0, coDanhDau = phanNay().muc.some(function (m) { return m.canAnh === true; });
     phanNay().muc.forEach(function (m) {
       if (m.loai === "doan") return; so += 1;
-      if (m.loai === "tuluan" && !(tt.anh[m.id] || []).length) thieu.push("câu " + so);
+      if (m.loai !== "tuluan" || (coDanhDau && m.canAnh !== true)) return;
+      var daGo = String(tt.traLoi[m.id] || "").trim() !== "", coAnh = (tt.anh[m.id] || []).length > 0;
+      if (!daGo && !coAnh) thieu.push(tenCau(m, so));
     });
     var chu = "Hết giờ làm bài. Ô gõ đã khoá, phần con gõ đã được lưu. Con có " + phutNopAnh() + " phút để chụp và gửi ảnh bài làm trên giấy, rồi trang tự nộp. ";
     nhac(chu + (thieu.length
-      ? "Còn ảnh chưa gửi: " + thieu.join(", ") + ". Câu nào con làm trên giấy thì chụp và gửi ngay."
-      : "Con đã gửi ảnh cho mọi câu viết. Gửi xong thì con bấm “Nộp bài”."), thieu.length > 0);
+      ? "Còn ảnh chưa gửi: " + thieu.join(", ") + ". Con chụp và gửi ngay."
+      : "Gửi xong ảnh thì con bấm “Nộp bài”."), thieu.length > 0);
   }
 
   // ---------- Lưu, chuyển phần, nộp ----------
@@ -552,7 +570,7 @@
           var vtDung = thuTuPhuongAn(kq.de || tt.de, m).indexOf(Number(c.dapAn));
           da = String.fromCharCode(65 + vtDung) + " (" + (m.luaChon || [])[Number(c.dapAn)] + ")";
         }
-        khu.appendChild(tao("div", "Câu " + so + ". " + (c.dung ? "Đúng rồi." : "Chưa đúng.") + " Đáp án: " + da + ". " + (c.giaiThich || "") + (c.meo ? " Mẹo: " + c.meo : ""), "ct " + (c.dung ? "dung" : "sai")));
+        khu.appendChild(tao("div", tenCau(m, so) + ". " + (c.dung ? "Đúng rồi." : "Chưa đúng.") + " Đáp án: " + da + ". " + (c.giaiThich || "") + (c.meo ? " Mẹo: " + c.meo : ""), "ct " + (c.dung ? "dung" : "sai")));
       });
     });
   }

@@ -99,6 +99,7 @@
   <div class="khung">
     <div class="the">
       <p class="ghichu" id="huong-dan"></p>
+      <p id="nhac" class="goi-y" role="status" hidden></p>
       <div id="bang-cau" aria-label="Danh sách câu"></div>
     </div>
     <div class="the" id="noi-dung"></div>
@@ -148,7 +149,8 @@
   // Kho kín trên Supabase: mỗi việc là một hàm ld_* trong cơ sở dữ liệu. Mã riêng và mã đề đi kèm mọi lần gọi.
   var HAM = {
     vao: ["ld_vao"], batDau: ["ld_bat_dau", "maPhong"], luu: ["ld_luu", "traLoi", "suKien", "phan"],
-    tep: ["ld_tep", "ten"], taiAnh: ["ld_tai_anh", "cau", "duLieu"], nop: ["ld_nop", "traLoi", "suKien"], ketQua: ["ld_ket_qua"]
+    tep: ["ld_tep", "ten"], taiAnh: ["ld_tai_anh", "cau", "duLieu"], nop: ["ld_nop", "traLoi", "suKien"], ketQua: ["ld_ket_qua"],
+    khoa: ["ld_khoa", "traLoi", "suKien"]
   };
   function goi(hanhDong, duLieu) {
     var h = HAM[hanhDong], than = { p_ma: maRieng, p_de: maDe };
@@ -211,7 +213,7 @@
         }
         lechGio = d.nay - Date.now();
         tt = { de: d.de, dong: d.dong, phan: d.phan, batDauPhan: d.batDauPhan,
-               traLoi: d.traLoi || {}, anh: d.anh || {}, suKien: [], danhDau: {} };
+               traLoi: d.traLoi || {}, anh: d.anh || {}, suKien: [], danhDau: {}, khoaLuc: d.khoaLuc || null };
         $("man-vao").hidden = true; $("man-thi").hidden = false; dangThi = true;
         moPhan();
         henLuu = setInterval(luuBai, 45000);
@@ -325,9 +327,9 @@
       ["paste", "drop"].forEach(function (s) { ta.addEventListener(s, function (e) { e.preventDefault(); }); });
       o.appendChild(ta);
       var h = tao("div", null, "hang"), chonTep = tao("input"); chonTep.type = "file"; chonTep.accept = "image/*"; chonTep.multiple = true; chonTep.hidden = true;
-      var n1 = tao("button", "Chọn ảnh bài làm", "nut phu"), n2 = tao("button", "Chụp bằng máy quay của máy tính", "nut phu"), tin = tao("span", null, "ghichu");
+      var n1 = tao("button", "Chọn ảnh bài làm", "nut phu nut-anh"), n2 = tao("button", "Chụp bằng máy quay của máy tính", "nut phu nut-anh"), tin = tao("span", null, "ghichu");
       n1.type = n2.type = "button"; var khu = tao("div", null, "anh-nop");
-      var veAnh = function () { khu.textContent = ""; (tt.anh[m.id] || []).forEach(function (a) { if (a.xem) { var im = tao("img"); im.src = a.xem; im.alt = "Ảnh bài làm đã nộp"; khu.appendChild(im); } else khu.appendChild(tao("span", "Một ảnh đã nộp", "goi-y")); }); veBangCau(); };
+      var veAnh = function () { khu.textContent = ""; (tt.anh[m.id] || []).forEach(function (a) { if (a.xem) { var im = tao("img"); im.src = a.xem; im.alt = "Ảnh bài làm đã nộp"; khu.appendChild(im); } else khu.appendChild(tao("span", "Một ảnh đã nộp", "goi-y")); }); veBangCau(); capNhatNhacAnh(); };
       var gui = function (duLieu) {
         tin.textContent = "Đang gửi ảnh…";
         return goi("taiAnh", { token: tt.token, cau: m.id, duLieu: duLieu }).then(function (d) {
@@ -360,7 +362,7 @@
     if (noi.querySelector("#may-quay")) return;
     navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1920 }, height: { ideal: 1080 } } }).then(function (luong) {
       var v = tao("video"); v.id = "may-quay"; v.autoplay = true; v.playsInline = true; v.srcObject = luong;
-      var h = tao("div", null, "hang"), chup = tao("button", "Chụp", "nut"), dong = tao("button", "Đóng máy quay", "nut phu");
+      var h = tao("div", null, "hang"), chup = tao("button", "Chụp", "nut nut-anh"), dong = tao("button", "Đóng máy quay", "nut phu nut-anh");
       chup.type = dong.type = "button";
       var tat = function () { luong.getTracks().forEach(function (t) { t.stop(); }); v.remove(); h.remove(); };
       chup.addEventListener("click", function () { gui(veNho(v, v.videoWidth, v.videoHeight)); });
@@ -405,13 +407,62 @@
     $("nut-xong-phan").disabled = $("nut-xong-phan-2").disabled = false;
     p.muc.forEach(function (m) { if (m.loai === "doan") nd.appendChild(dungDoan(m)); else { so += 1; nd.appendChild(dungCau(m, so)); } });
     veBangCau(); window.scrollTo(0, 0);
+    $("nhac").hidden = true; daNhac5 = false;
+    if (tt.khoaLuc) cheDoNopAnh();
     henGio = setInterval(nhipGio, 500); nhipGio();
   }
   function nhipGio() {
-    var con = Math.max(0, Math.round((hetGioPhan() - nayMayChu()) / 1000)), o = $("dong-ho");
+    // Đã khoá bài: đồng hồ đếm giờ gửi ảnh. Chưa khoá: đồng hồ đếm giờ làm bài của phần.
+    var het = tt.khoaLuc ? Math.min(tt.khoaLuc + phutNopAnh() * 60000, tt.dong) : hetGioPhan();
+    var con = Math.max(0, Math.round((het - nayMayChu()) / 1000)), o = $("dong-ho");
     o.textContent = ("0" + Math.floor(con / 60)).slice(-2) + ":" + ("0" + con % 60).slice(-2);
     o.classList.toggle("gap", con <= 300);
-    if (con <= 0) xongPhan(true);
+    if (!tt.khoaLuc && phutNopAnh() > 0 && con <= 300 && con > 0 && !daNhac5) {
+      daNhac5 = true;
+      nhac("Còn 5 phút làm bài. Hết giờ, ô gõ sẽ khoá và con có thêm " + phutNopAnh() + " phút chỉ để chụp và gửi ảnh bài làm trên giấy.", false);
+    }
+    if (con <= 0) {
+      if (tt.khoaLuc || phutNopAnh() <= 0) xongPhan(true);
+      else batDauNopAnh();
+    }
+  }
+
+  // ---------- Giờ gửi ảnh (QĐ-015) ----------
+  // Phần cuối có "phutNopAnh": hết giờ làm bài thì khoá bài trên máy chủ, con còn N phút chỉ để gửi ảnh, rồi trang tự nộp.
+  var daNhac5 = false, dangKhoa = false;
+  function phutNopAnh() { return tt.phan === tt.de.phan.length - 1 ? (Number(phanNay().phutNopAnh) || 0) : 0; }
+  function nhac(chu, canhBao) { var o = $("nhac"); o.textContent = chu; o.className = canhBao ? "loi" : "goi-y"; o.hidden = false; }
+  function batDauNopAnh() {
+    if (dangKhoa || tt.khoaLuc) return;
+    dangKhoa = true; tt.khoaLuc = nayMayChu();   // giờ tạm; máy chủ trả giờ khoá thật
+    cheDoNopAnh();
+    var thu = function (lan) {
+      return goi("khoa", { traLoi: tt.traLoi, suKien: tt.suKien })
+        .then(function (d) { if (d && d.khoaLuc) tt.khoaLuc = d.khoaLuc; })
+        .catch(function () { if (lan < 6) setTimeout(function () { thu(lan + 1); }, 3000); });
+    };
+    thu(1);
+  }
+  function cheDoNopAnh() {
+    var nd = $("noi-dung");
+    Array.prototype.forEach.call(nd.querySelectorAll("input, textarea, button"), function (e) {
+      if (e.type === "file" || e.classList.contains("nut-anh")) return;
+      e.disabled = true;
+    });
+    $("ten-phan").textContent = "Giờ gửi ảnh bài làm";
+    capNhatNhacAnh();
+  }
+  function capNhatNhacAnh() {
+    if (!tt || !tt.khoaLuc) return;
+    var thieu = [], so = 0;
+    phanNay().muc.forEach(function (m) {
+      if (m.loai === "doan") return; so += 1;
+      if (m.loai === "tuluan" && !(tt.anh[m.id] || []).length) thieu.push("câu " + so);
+    });
+    var chu = "Hết giờ làm bài. Ô gõ đã khoá, phần con gõ đã được lưu. Con có " + phutNopAnh() + " phút để chụp và gửi ảnh bài làm trên giấy, rồi trang tự nộp. ";
+    nhac(chu + (thieu.length
+      ? "Còn ảnh chưa gửi: " + thieu.join(", ") + ". Câu nào con làm trên giấy thì chụp và gửi ngay."
+      : "Con đã gửi ảnh cho mọi câu viết. Gửi xong thì con bấm “Nộp bài”."), thieu.length > 0);
   }
 
   // ---------- Lưu, chuyển phần, nộp ----------
@@ -486,6 +537,7 @@
           if (kq.de) {
             var o = tao("div", null, "doan");
             if (m.tieuDe) o.appendChild(tao("h3", m.tieuDe));
+            if (m.anSauThi) o.appendChild(tao("div", "Bài đọc này không hiện lại sau giờ thi.", "ghichu"));
             if (m.noiDung) o.appendChild(document.createTextNode(m.noiDung));
             if (m.nguon) o.appendChild(tao("div", "Nguồn: " + m.nguon, "ghichu"));
             if (m.hinh) { var hb = tao("img"); hb.alt = "Hình của bài đọc"; napTep(m.hinh, hb, "src"); o.appendChild(hb); }

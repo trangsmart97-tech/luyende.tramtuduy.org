@@ -1,2 +1,6 @@
-// Địa chỉ của kho kín (Google Apps Script). Cô dán địa chỉ nhận được ở bước “Triển khai” vào giữa hai dấu nháy.
-var CAU_HINH = { khoKin: "https://script.google.com/macros/s/AKfycbxMBnjkgeIX4CNeyU3vBMHnpr4aUVopkKPed1QFntjQKshH9cp0nu6VYR29uJ1ql0O9/exec" };
+// Kho kín của luyện đề nằm trên Supabase, cùng dự án với cổng tramtuduy.org.
+// Khóa công khai (publishable) được thiết kế để nằm trong trang web; quyền thật được khoá trong cơ sở dữ liệu.
+var CAU_HINH = {
+  supabase: "https://pqildzyhzpudfkjinhyx.supabase.co",
+  khoaCongKhai: "sb_publishable_A_TxFkSIx-evT5vTUEzp3w_vUIOH3l_"
+};

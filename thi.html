@@ -66,7 +66,7 @@
 <div class="khung" id="man-vao">
   <div class="the">
     <h1 id="ten-de">Luyện đề – Trạm Tư Duy</h1>
-    <p class="ghichu" id="mo-ta">Cô đang mở phòng thi cho con…</p>
+    <p class="ghichu" id="mo-ta">Cô đang mở phòng thi cho bạn…</p>
     <form id="form-vao" novalidate>
       <p id="chao" class="goi-y" hidden></p>
       <p id="gio-thi" class="ghichu" hidden></p>
@@ -76,11 +76,11 @@
       </div>
       <h3>Luật phòng thi</h3>
       <ul class="luat">
-        <li>Con làm bài một mình, ở chế độ toàn màn hình.</li>
-        <li>Con không mở cửa sổ khác, không mở trang khác. Mỗi lần con rời trang thi, trang ghi lại và báo cho cô.</li>
-        <li>Con bật máy quay trên Google Meet trong suốt giờ thi.</li>
-        <li>Hết giờ của mỗi phần, trang tự chuyển sang phần sau. Con không quay lại phần trước được.</li>
-        <li>Bài của con được lưu liên tục. Nếu máy gặp sự cố, con mở lại đúng đường dẫn riêng này để làm tiếp.</li>
+        <li>Bạn làm bài một mình, ở chế độ toàn màn hình.</li>
+        <li>Bạn không mở cửa sổ khác, không mở trang khác. Mỗi lần bạn rời trang thi, trang ghi lại và báo cho cô.</li>
+        <li>Bạn bật máy quay trên Google Meet trong suốt giờ thi.</li>
+        <li>Hết giờ của mỗi phần, trang tự chuyển sang phần sau. Bạn không quay lại phần trước được.</li>
+        <li>Bài của bạn được lưu liên tục. Nếu máy gặp sự cố, bạn mở lại đúng đường dẫn riêng này để làm tiếp.</li>
       </ul>
       <div class="hang"><button class="nut" type="submit" id="nut-vao">Bắt đầu làm bài</button></div>
       <div class="loi" id="loi-vao" hidden></div>
@@ -110,7 +110,7 @@
 <!-- Màn hình 3: kết quả -->
 <div class="khung" id="man-kq" hidden>
   <div class="the">
-    <h1>Con đã nộp bài</h1>
+    <h1>Bạn đã nộp bài</h1>
     <p id="kq-ten"></p>
     <h2>Phần máy chấm</h2>
     <p class="diem-lon" id="kq-diem"></p>
@@ -124,10 +124,10 @@
   </div>
 </div>
 
-<!-- Lớp che khi con rời trang thi -->
+<!-- Lớp che khi bạn rời trang thi -->
 <div id="che" hidden><div>
-  <h2>Con đã rời trang thi</h2>
-  <p>Lần rời trang này đã được ghi lại. Con bấm nút bên dưới để quay lại bài làm.</p>
+  <h2>Bạn đã rời trang thi</h2>
+  <p>Lần rời trang này đã được ghi lại. Bạn bấm nút bên dưới để quay lại bài làm.</p>
   <p id="che-dem"></p>
   <button class="nut" type="button" id="nut-quay-lai">Quay lại bài thi</button>
 </div></div>
@@ -140,7 +140,7 @@
   var thamSo = new URLSearchParams(location.search);
   var maDe = thamSo.get("de") || "", maRieng = thamSo.get("ma") || "";
   var tt = null;              // trạng thái lượt thi
-  var lechGio = 0;            // giờ máy chủ trừ giờ máy con
+  var lechGio = 0;            // giờ máy chủ trừ giờ máy bạn
   var dangThi = false, dangNop = false, henGio = null, henLuu = null, tep = {}, daNopTruoc = false;
   var boQua = function () {};
 
@@ -162,7 +162,7 @@
       headers: { "Content-Type": "application/json", apikey: CAU_HINH.khoaCongKhai }
     }).then(function (r) {
       return r.json().catch(function () { return null; }).then(function (d) {
-        if (!r.ok) throw new Error(d && d.message ? d.message : "Chưa kết nối được. Con kiểm tra mạng rồi thử lại.");
+        if (!r.ok) throw new Error(d && d.message ? d.message : "Chưa kết nối được. Bạn kiểm tra mạng rồi thử lại.");
         return d;
       });
     });
@@ -172,25 +172,30 @@
   // ---------- Vào phòng thi ----------
   function gioPhut(ms) {
     var d = new Date(ms);
-    return d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" }) + " ngày " + d.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit" });
+    return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + " ngày " + ("0" + d.getDate()).slice(-2) + "/" + ("0" + (d.getMonth() + 1)).slice(-2);
+  }
+  // Giờ và ngày đầy đủ, ví dụ “13:18 ngày 30/11/2026” (không phụ thuộc cách trình duyệt viết ngày).
+  function ngayGio(ms) {
+    var d = new Date(ms), hai = function (n) { return ("0" + n).slice(-2); };
+    return hai(d.getHours()) + ":" + hai(d.getMinutes()) + " ngày " + hai(d.getDate()) + "/" + hai(d.getMonth() + 1) + "/" + d.getFullYear();
   }
   $("nut-vao").disabled = true;
   if (!/^[a-z0-9-]+$/.test(maDe) || !/^[a-z0-9]{24,64}$/.test(maRieng)) {
     $("mo-ta").textContent = "";
-    baoLoiVao("Đường dẫn chưa đúng. Con mở đúng đường dẫn riêng cô gửi cho gia đình nhé."); $("nut-vao").disabled = true;
+    baoLoiVao("Đường dẫn chưa đúng. Bạn mở đúng đường dẫn riêng cô gửi cho gia đình nhé."); $("nut-vao").disabled = true;
   } else {
     goi("vao").then(function (d) {
       $("ten-de").textContent = d.tieuDe; document.title = d.tieuDe + " – Trạm Tư Duy";
-      $("mo-ta").textContent = "Con kiểm tra tên của mình, rồi bấm “Bắt đầu làm bài”.";
-      $("chao").textContent = "Chào con " + d.hoTen + "."; $("chao").hidden = false;
-      // Đề có giờ bắt đầu muộn nhất (QĐ-018): mỗi con có đủ giờ tính từ lúc con bắt đầu.
+      $("mo-ta").textContent = "Bạn kiểm tra tên của mình, rồi bấm “Bắt đầu làm bài”.";
+      $("chao").textContent = "Chào bạn " + d.hoTen + "."; $("chao").hidden = false;
+      // Đề có giờ bắt đầu muộn nhất (QĐ-018): mỗi bạn có đủ giờ tính từ lúc bạn bắt đầu.
       $("gio-thi").textContent = d.batDauMuonNhat
-        ? "Đề mở lúc " + gioPhut(d.mo) + ". Con bắt đầu làm bài trước " + gioPhut(d.batDauMuonNhat) + ". Thời gian làm bài của con tính từ lúc con bấm “Bắt đầu làm bài”."
+        ? "Đề mở lúc " + gioPhut(d.mo) + ". Bạn bắt đầu làm bài trước " + gioPhut(d.batDauMuonNhat) + ". Thời gian làm bài của bạn tính từ lúc bạn bấm “Bắt đầu làm bài”."
         : "Đề mở lúc " + gioPhut(d.mo) + ", đóng lúc " + gioPhut(d.dong) + ".";
       $("gio-thi").hidden = false;
       $("khu-ma-phong").hidden = !d.coMaPhong;
       if (d.daNop) { $("nut-vao").textContent = "Xem kết quả"; }
-      else if (d.daBatDau) { $("nut-vao").textContent = "Làm tiếp bài của con"; }
+      else if (d.daBatDau) { $("nut-vao").textContent = "Làm tiếp bài của bạn"; }
       $("nut-vao").disabled = false; daNopTruoc = d.daNop;
     }).catch(function (l) { $("mo-ta").textContent = ""; baoLoiVao(l.message); $("nut-vao").disabled = true; });
   }
@@ -209,10 +214,10 @@
     toanMan.then(function () { return goi("batDau", { maPhong: $("ma-phong").value.trim() }); })
       .then(function (d) {
         if (d.hetGio) {
-          // Đã quá giờ đóng: máy chủ đã nộp bài với phần con lưu được, không phát lại đề.
+          // Đã quá giờ đóng: máy chủ đã nộp bài với phần bạn lưu được, không phát lại đề.
           if (document.fullscreenElement) document.exitFullscreen();
           tt = { de: d.de || null }; hienKetQua(d);
-          $("kq-ten").textContent = "Học sinh: " + d.ten + ". Đề đã đóng, nên máy đã nộp bài của con với phần bài lưu được trước giờ đóng.";
+          $("kq-ten").textContent = "Học sinh: " + d.ten + ". Đề đã đóng, nên máy đã nộp bài của bạn với phần bài lưu được trước giờ đóng.";
           return;
         }
         lechGio = d.nay - Date.now();
@@ -224,14 +229,14 @@
       })
       .catch(function (loi) {
         if (document.fullscreenElement) document.exitFullscreen();
-        baoLoiVao(loi.message || "Chưa kết nối được. Con kiểm tra mạng rồi thử lại.");
+        baoLoiVao(loi.message || "Chưa kết nối được. Bạn kiểm tra mạng rồi thử lại.");
       });
   });
 
   // ---------- Dựng một phần của đề ----------
   function phanNay() { return tt.de.phan[tt.phan]; }
   // Xáo phương án khi tệp đề ghi "xaoPhuongAn": true. Câu ghi "giuThuTu": true (ví dụ có “Cả A và B”) giữ nguyên.
-  // Thứ tự cố định theo mã riêng của con và mã câu: tải lại trang hay xem kết quả vẫn ra đúng thứ tự cũ.
+  // Thứ tự cố định theo mã riêng của bạn và mã câu: tải lại trang hay xem kết quả vẫn ra đúng thứ tự cũ.
   function thuTuPhuongAn(de, m) {
     var ds = (m.luaChon || []).map(function (_, j) { return j; });
     if (!de || !de.xaoPhuongAn || m.giuThuTu) return ds;
@@ -258,7 +263,7 @@
     if (tep[ten]) return dat(tep[ten]);
     goi("tep", { token: tt.token, ten: ten }).then(function (d) {
       tep[ten] = "data:" + d.loai + ";base64," + d.duLieu; dat(tep[ten]);
-    }).catch(function () { phanTu.alt = "Chưa mở được hình. Con báo cô ngay nhé."; });
+    }).catch(function () { phanTu.alt = "Chưa mở được hình. Bạn báo cô ngay nhé."; });
   }
 
   function dungDoan(m) {
@@ -272,7 +277,7 @@
       var a = new Audio(), nut = tao("button", null, "nut phu"), tin = tao("span", null, "ghichu");
       nut.type = "button"; a.preload = "auto"; napTep(m.audio, a, "src");
       var ve = function () {
-        nut.textContent = da >= lan ? "Con đã nghe đủ " + lan + " lần" : "Nghe lần " + (da + 1) + " trên " + lan;
+        nut.textContent = da >= lan ? "Bạn đã nghe đủ " + lan + " lần" : "Nghe lần " + (da + 1) + " trên " + lan;
         nut.disabled = da >= lan || !a.paused;
         tin.textContent = a.paused ? "" : " Đang phát. Bản ghi không dừng và không tua lại được.";
       };
@@ -312,7 +317,7 @@
     if (m.hinh) { var i = tao("img"); i.alt = "Hình của câu " + so; napTep(m.hinh, i, "src"); o.appendChild(i); }
 
     if (m.loai === "chon") {
-      // j là vị trí gốc trong tệp đề (máy chấm theo j); vt là vị trí con nhìn thấy sau khi xáo.
+      // j là vị trí gốc trong tệp đề (máy chấm theo j); vt là vị trí bạn nhìn thấy sau khi xáo.
       thuTuPhuongAn(tt.de, m).forEach(function (j, vt) {
         var lc = m.luaChon[j];
         var nhan = tao("label", null, "chon"), r = tao("input"); r.type = "radio"; r.name = "c-" + m.id; r.value = j;
@@ -321,10 +326,10 @@
         nhan.appendChild(r); nhan.appendChild(document.createTextNode(String.fromCharCode(65 + vt) + ". " + lc)); o.appendChild(nhan);
       });
     } else if (m.loai === "dien" && !CHO_TRONG.test(String(m.cau))) {
-      var o1 = tao("input"); o1.type = "text"; o1.autocomplete = "off"; o1.spellcheck = false; o1.placeholder = "Con viết câu trả lời vào đây";
+      var o1 = tao("input"); o1.type = "text"; o1.autocomplete = "off"; o1.spellcheck = false; o1.placeholder = "Bạn viết câu trả lời vào đây";
       o1.value = tt.traLoi[m.id] || ""; o1.addEventListener("input", function () { ghi(o1.value); });
       if (m.donVi) {
-        // Đơn vị in sẵn sau ô, như bản giấy: con chỉ gõ con số.
+        // Đơn vị in sẵn sau ô, như bản giấy: bạn chỉ gõ bạn số.
         var hangDv = tao("div", null, "hang"); o1.className = "dien"; hangDv.appendChild(o1); hangDv.appendChild(tao("span", m.donVi)); o.appendChild(hangDv);
       } else o.appendChild(o1);
     } else if (m.loai === "viet") {
@@ -333,8 +338,8 @@
       o2.value = tt.traLoi[m.id] || ""; o2.addEventListener("input", function () { ghi(o2.value); }); o.appendChild(o2);
     } else if (m.loai === "tuluan") {
       o.appendChild(tao("p", m.canAnh
-        ? "Câu này con viết trên giấy, rồi chụp và gửi ảnh. Con vẫn gõ được vào khung nếu muốn."
-        : "Con chọn một trong hai cách: gõ bài vào khung, hoặc làm trên giấy rồi nộp ảnh. Con cũng dùng được cả hai.", "ghichu"));
+        ? "Câu này bạn viết trên giấy, rồi chụp và gửi ảnh. Bạn vẫn gõ được vào khung nếu muốn."
+        : "Bạn chọn một trong hai cách: gõ bài vào khung, hoặc làm trên giấy rồi nộp ảnh. Bạn cũng dùng được cả hai.", "ghichu"));
       var ta = tao("textarea"); ta.spellcheck = false; ta.value = tt.traLoi[m.id] || "";
       ta.addEventListener("input", function () { ghi(ta.value); });
       ["paste", "drop"].forEach(function (s) { ta.addEventListener(s, function (e) { e.preventDefault(); }); });
@@ -381,7 +386,7 @@
       chup.addEventListener("click", function () { gui(veNho(v, v.videoWidth, v.videoHeight)); });
       dong.addEventListener("click", tat);
       h.appendChild(chup); h.appendChild(dong); noi.appendChild(v); noi.appendChild(h);
-    }).catch(function () { alertNhe("Máy chưa cho dùng máy quay. Con chọn cách “Chọn ảnh bài làm” nhé."); });
+    }).catch(function () { alertNhe("Máy chưa cho dùng máy quay. Bạn chọn cách “Chọn ảnh bài làm” nhé."); });
   }
   function alertNhe(chu) { $("luu-tt").textContent = chu; }
 
@@ -400,7 +405,7 @@
   function moPhan() {
     var p = phanNay(), nd = $("noi-dung"), so = 0;
     $("ten-phan").textContent = "Phần " + (tt.phan + 1) + " trên " + tt.de.phan.length + ". " + p.ten;
-    $("huong-dan").textContent = (p.huongDan || "") + " Ô màu xanh là câu con đã làm. Vạch vàng là câu con đánh dấu xem lại.";
+    $("huong-dan").textContent = (p.huongDan || "") + " Ô màu xanh là câu bạn đã làm. Vạch vàng là câu bạn đánh dấu xem lại.";
     var cuoi = tt.phan === tt.de.phan.length - 1;
     $("nut-xong-phan").textContent = $("nut-xong-phan-2").textContent = cuoi ? "Nộp bài" : "Nộp phần này";
     nd.textContent = "";
@@ -409,7 +414,7 @@
     if (nayMayChu() < moLucPhan()) {
       $("bang-cau").textContent = ""; $("nut-xong-phan").disabled = $("nut-xong-phan-2").disabled = true;
       nd.appendChild(tao("h2", "Phần này mở lúc " + new Date(moLucPhan()).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" }) + "."));
-      nd.appendChild(tao("p", "Con chờ cùng cả lớp. Đến giờ, đề tự hiện ra. Trong lúc chờ, con không được quay lại phần trước.", "ghichu"));
+      nd.appendChild(tao("p", "Bạn chờ cùng cả lớp. Đến giờ, đề tự hiện ra. Trong lúc chờ, bạn không được quay lại phần trước.", "ghichu"));
       var cho = function () {
         // So bằng mili giây: làm tròn giây có thể ra 0 khi còn dưới nửa giây, khi ấy moPhan lại vào màn hình chờ và gọi cho() mãi.
         var conMs = moLucPhan() - nayMayChu(), con = Math.max(0, Math.ceil(conMs / 1000));
@@ -433,7 +438,7 @@
     o.classList.toggle("gap", con <= 300);
     if (!tt.khoaLuc && phutNopAnh() > 0 && con <= 300 && con > 0 && !daNhac5) {
       daNhac5 = true;
-      nhac("Còn 5 phút làm bài. Hết giờ, ô gõ sẽ khoá và con có thêm " + phutNopAnh() + " phút chỉ để chụp và gửi ảnh bài làm trên giấy.", false);
+      nhac("Còn 5 phút làm bài. Hết giờ, ô gõ sẽ khoá và bạn có thêm " + phutNopAnh() + " phút chỉ để chụp và gửi ảnh bài làm trên giấy.", false);
     }
     if (con <= 0) {
       if (tt.khoaLuc || phutNopAnh() <= 0) xongPhan(true);
@@ -442,7 +447,7 @@
   }
 
   // ---------- Giờ gửi ảnh (QĐ-015) ----------
-  // Phần cuối có "phutNopAnh": hết giờ làm bài thì khoá bài trên máy chủ, con còn N phút chỉ để gửi ảnh, rồi trang tự nộp.
+  // Phần cuối có "phutNopAnh": hết giờ làm bài thì khoá bài trên máy chủ, bạn còn N phút chỉ để gửi ảnh, rồi trang tự nộp.
   var daNhac5 = false, dangKhoa = false;
   function phutNopAnh() { return tt.phan === tt.de.phan.length - 1 ? (Number(phanNay().phutNopAnh) || 0) : 0; }
   function nhac(chu, canhBao) { var o = $("nhac"); o.textContent = chu; o.className = canhBao ? "loi" : "goi-y"; o.hidden = false; }
@@ -469,7 +474,7 @@
   function capNhatNhacAnh() {
     if (!tt || !tt.khoaLuc) return;
     // Chỉ nhắc câu tự luận cần ảnh ("canAnh": true; phần không đánh dấu câu nào thì xét mọi câu tự luận)
-    // mà con chưa gửi ảnh và cũng chưa gõ gì.
+    // mà bạn chưa gửi ảnh và cũng chưa gõ gì.
     var thieu = [], so = 0, coDanhDau = phanNay().muc.some(function (m) { return m.canAnh === true; });
     phanNay().muc.forEach(function (m) {
       if (m.loai === "doan") return; so += 1;
@@ -477,10 +482,10 @@
       var daGo = String(tt.traLoi[m.id] || "").trim() !== "", coAnh = (tt.anh[m.id] || []).length > 0;
       if (!daGo && !coAnh) thieu.push(tenCau(m, so));
     });
-    var chu = "Hết giờ làm bài. Ô gõ đã khoá, phần con gõ đã được lưu. Con có " + phutNopAnh() + " phút để chụp và gửi ảnh bài làm trên giấy, rồi trang tự nộp. ";
+    var chu = "Hết giờ làm bài. Ô gõ đã khoá, phần bạn gõ đã được lưu. Bạn có " + phutNopAnh() + " phút để chụp và gửi ảnh bài làm trên giấy, rồi trang tự nộp. ";
     nhac(chu + (thieu.length
-      ? "Còn ảnh chưa gửi: " + thieu.join(", ") + ". Con chụp và gửi ngay."
-      : "Gửi xong ảnh thì con bấm “Nộp bài”."), thieu.length > 0);
+      ? "Còn ảnh chưa gửi: " + thieu.join(", ") + ". Bạn chụp và gửi ngay."
+      : "Gửi xong ảnh thì bạn bấm “Nộp bài”."), thieu.length > 0);
   }
 
   // ---------- Lưu, chuyển phần, nộp ----------
@@ -495,7 +500,7 @@
     var cuoi = tt.phan === tt.de.phan.length - 1;
     if (!tuDong) {
       var chua = phanNay().muc.filter(function (m) { return m.loai !== "doan" && !daLam(m); }).length;
-      var hoi = (chua ? "Con còn " + chua + " câu chưa làm. " : "") + (cuoi ? "Con chắc chắn nộp bài chứ?" : "Nộp phần này rồi con không quay lại được. Con chắc chắn chứ?");
+      var hoi = (chua ? "Bạn còn " + chua + " câu chưa làm. " : "") + (cuoi ? "Bạn chắc chắn nộp bài chứ?" : "Nộp phần này rồi bạn không quay lại được. Bạn chắc chắn chứ?");
       boQua(2000); var dongY = window.confirm(hoi); boQua(1500);
       if (!dongY) return;
     }
@@ -518,7 +523,7 @@
       hienKetQua(kq);
     }).catch(function () {
       dangNop = false; $("nut-xong-phan").disabled = $("nut-xong-phan-2").disabled = false;
-      $("luu-tt").textContent = "Chưa nộp được. Con giữ nguyên trang này, kiểm tra mạng rồi bấm “Nộp bài” lần nữa.";
+      $("luu-tt").textContent = "Chưa nộp được. Bạn giữ nguyên trang này, kiểm tra mạng rồi bấm “Nộp bài” lần nữa.";
     });
   }
   ["nut-xong-phan", "nut-xong-phan-2"].forEach(function (id) { $(id).addEventListener("click", function () { xongPhan(false); }); });
@@ -534,7 +539,7 @@
       var tr = tao("tr"); tr.appendChild(tao("td", n)); tr.appendChild(tao("td", g.diem + " trên " + g.toiDa)); b.appendChild(tr);
     });
     $("kq-co").textContent = kq.soCauChoCham
-      ? "Cô sẽ chấm " + kq.soCauChoCham + " câu còn lại, tổng " + kq.toiDaCoCham + " điểm. Kết quả đầy đủ có trong hồ sơ học tập của con trên tramtuduy.org khi cô chấm xong."
+      ? "Cô sẽ chấm " + kq.soCauChoCham + " câu còn lại, tổng " + kq.toiDaCoCham + " điểm. Kết quả đầy đủ có trong hồ sơ học tập của bạn trên tramtuduy.org khi cô chấm xong."
       : "Đề này không có câu cô chấm.";
     veChiTiet(kq);
     window.scrollTo(0, 0);
@@ -542,15 +547,15 @@
   function veChiTiet(kq) {
     var khu = $("kq-chi-tiet"); khu.textContent = "";
     if (!kq.chiTiet) {
-      $("kq-cho").textContent = "Đáp án từng câu mở lúc " + new Date(kq.moChiTiet).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" }) + ", khi cả lớp đã hết giờ thi.";
+      $("kq-cho").textContent = "Đáp án từng câu mở lúc " + ngayGio(kq.moChiTiet) + ", khi cả lớp đã hết giờ thi.";
       $("nut-xem-lai").hidden = false; return;
     }
-    $("kq-cho").textContent = "Con xem lại từng câu máy chấm bên dưới."; $("nut-xem-lai").hidden = true;
+    $("kq-cho").textContent = "Bạn xem lại từng câu máy chấm bên dưới."; $("nut-xem-lai").hidden = true;
     (kq.de || tt.de).phan.forEach(function (p) {
       var so = 0; khu.appendChild(tao("h3", p.ten));
       p.muc.forEach(function (m) {
         if (m.loai === "doan") {
-          // Bài đọc hiện lại để con đọc khi xem lời giải. Chỉ lấy từ bản máy chủ gửi kèm kết quả (kq.de):
+          // Bài đọc hiện lại để bạn đọc khi xem lời giải. Chỉ lấy từ bản máy chủ gửi kèm kết quả (kq.de):
           // máy chủ đã bỏ khối "anSauThi" và bản ghi nghe. Không dùng bản đề trong bộ nhớ của trang.
           if (kq.de) {
             var o = tao("div", null, "doan");
@@ -586,7 +591,7 @@
     if (!dangThi || dangNop) return;
     var nay = Date.now(); if (loai === "mat-tieu-diem" && nay < boQuaDen) return; if (nay - roiGanNhat < 1500) return; roiGanNhat = nay;
     lanRoi += 1; tt.suKien.push({ loai: loai, luc: nayMayChu(), phan: tt.phan });
-    $("che-dem").textContent = "Số lần con rời trang thi: " + lanRoi + ".";
+    $("che-dem").textContent = "Số lần bạn rời trang thi: " + lanRoi + ".";
     $("che").hidden = false; luuBai();
   }
   document.addEventListener("visibilitychange", function () { if (document.hidden) ghiRoi("doi-cua-so"); });

@@ -71,12 +71,12 @@
 
   <section id="s-viec" hidden>
     <h2>Ba việc của tuần này</h2>
-    <p class="phu">Ba việc này rút ra từ những chỗ con còn vướng. Con làm xong việc nào thì báo cô việc đó.</p>
+    <p class="phu">Ba việc này rút ra từ những chỗ bạn còn vướng. Bạn làm xong việc nào thì báo cô việc đó.</p>
     <ol class="viec" id="viec"></ol>
   </section>
 
   <section id="s-tong" hidden>
-    <h2>Hành trình của con đến hôm nay</h2>
+    <h2>Hành trình của bạn đến hôm nay</h2>
     <p class="phu" id="tong-phu"></p>
     <div class="o-so" id="o-so"></div>
     <div class="thanh-tong" id="thanh-tong" role="img"></div>
@@ -84,13 +84,13 @@
 
   <section id="s-nhom" hidden>
     <h2>Năm nhóm môn</h2>
-    <p class="phu">Thanh màu là tỷ lệ câu con làm đúng trong các lần gần đây. Vạch đứng là đích của con.</p>
+    <p class="phu">Thanh màu là tỷ lệ câu bạn làm đúng trong các lần gần đây. Vạch đứng là đích của bạn.</p>
     <div class="nhom" id="nhom"></div>
   </section>
 
   <section id="s-ban-do" hidden>
     <h2>Bản đồ các trạm</h2>
-    <p class="phu">Mỗi trạm là một chủ đề. Con bấm vào một trạm để xem chi tiết.</p>
+    <p class="phu">Mỗi trạm là một chủ đề. Bạn bấm vào một trạm để xem chi tiết.</p>
     <div class="ban-do" id="ban-do"></div>
     <div class="chu-giai" id="chu-giai"></div>
     <div id="chi-tiet" aria-live="polite" hidden></div>
@@ -98,7 +98,7 @@
 
   <section id="s-ky-nang" hidden>
     <h2>Kỹ năng làm bài</h2>
-    <p class="phu">Đây là những thói quen giúp con làm bài đúng và nhanh.</p>
+    <p class="phu">Đây là những thói quen giúp bạn làm bài đúng và nhanh.</p>
     <ul class="ky-nang" id="ky-nang"></ul>
   </section>
 
@@ -116,14 +116,14 @@
   </section>
 
   <section id="s-tu" hidden>
-    <h2>Con tự đánh giá</h2>
-    <p class="phu">Đây là điểm con tự chấm ở các đề giấy. Phần này để con và ba mẹ theo dõi, không dùng để xếp trạng thái các trạm.</p>
+    <h2>Bạn tự đánh giá</h2>
+    <p class="phu">Đây là điểm bạn tự chấm ở các đề giấy. Phần này để bạn và ba mẹ theo dõi, không dùng để xếp trạng thái các trạm.</p>
     <table class="bang" id="tu-cham"></table>
   </section>
 
   <section id="s-nhat-ky" hidden>
     <h2>Nhật ký bài làm gần đây</h2>
-    <p class="phu">Mọi bài con làm trên web đều được ghi lại ở đây.</p>
+    <p class="phu">Mọi bài bạn làm trên web đều được ghi lại ở đây.</p>
     <table class="bang" id="nhat-ky"></table>
   </section>
 
@@ -142,10 +142,10 @@
   function tao(the, chu, lop) { var e = document.createElement(the); if (chu != null) e.textContent = chu; if (lop) e.className = lop; return e; }
   function svg(the, tt) { var e = document.createElementNS("http://www.w3.org/2000/svg", the); Object.keys(tt || {}).forEach(function (k) { e.setAttribute(k, tt[k]); }); return e; }
   var TT = {
-    vung:  { ten: "Đã vững",     kyHieu: "●", giai: "Con làm đúng ổn định ở nhiều lần cách nhau." },
-    luyen: { ten: "Đang luyện",  kyHieu: "◐", giai: "Con đã làm được một phần và đang tiến lên." },
-    moi:   { ten: "Mới học",     kyHieu: "○", giai: "Con vừa học, chưa đủ lần làm để kết luận." },
-    on:    { ten: "Cần ôn lại",  kyHieu: "↻", giai: "Đã lâu con chưa gặp lại, hoặc lần gần nhất con còn sai." },
+    vung:  { ten: "Đã vững",     kyHieu: "●", giai: "Bạn làm đúng ổn định ở nhiều lần cách nhau." },
+    luyen: { ten: "Đang luyện",  kyHieu: "◐", giai: "Bạn đã làm được một phần và đang tiến lên." },
+    moi:   { ten: "Mới học",     kyHieu: "○", giai: "Bạn vừa học, chưa đủ lần làm để kết luận." },
+    on:    { ten: "Cần ôn lại",  kyHieu: "↻", giai: "Đã lâu bạn chưa gặp lại, hoặc lần gần nhất bạn còn sai." },
     chua:  { ten: "Chưa học",    kyHieu: "·", giai: "Trạm này nằm ở các tuần sắp tới." }
   };
   var THU_TU = ["vung", "luyen", "moi", "on", "chua"];
@@ -157,7 +157,7 @@
     document.title = "Hồ sơ của " + d.ten + " – Trạm Tư Duy";
     $("ten").textContent = "Hồ sơ học tập của " + d.ten;
     $("phu-de").textContent = (d.chang || ("Tuần " + d.tuanHienTai + " trên " + d.tongTuan)) + ". Cập nhật ngày " + d.capNhat + ".";
-    if (d.laMau) bao("Đây là hồ sơ mẫu với số liệu giả, để cô, ba mẹ và các con xem trước cách trình bày.");
+    if (d.laMau) bao("Đây là hồ sơ mẫu với số liệu giả, để cô, ba mẹ và các bạn xem trước cách trình bày.");
 
     // Ba việc
     (d.baViec || []).forEach(function (v) { var li = tao("li"), k = tao("div"); k.appendChild(tao("b", v.viec)); k.appendChild(tao("span", v.viSao)); li.appendChild(k); $("viec").appendChild(li); });
@@ -167,7 +167,7 @@
     var dem = {}; THU_TU.forEach(function (t) { dem[t] = 0; });
     d.chuDe.forEach(function (c) { dem[c.trangThai] += 1; });
     var daHoc = d.chuDe.length - dem.chua;
-    $("tong-phu").textContent = "Con đã đi qua " + daHoc + " trên " + d.chuDe.length + " trạm. Trong đó " + dem.vung + " trạm con đã vững.";
+    $("tong-phu").textContent = "Bạn đã đi qua " + daHoc + " trên " + d.chuDe.length + " trạm. Trong đó " + dem.vung + " trạm bạn đã vững.";
     THU_TU.forEach(function (t) {
       var o = tao("div"); o.appendChild(tao("div", String(dem[t]), "so"));
       var n = tao("div", null, "ten"); n.appendChild(cham(t)); n.appendChild(document.createTextNode(TT[t].ten)); o.appendChild(n); $("o-so").appendChild(o);
@@ -232,17 +232,17 @@
       var b = $(id), hd = tao("tr"); cot.forEach(function (c) { hd.appendChild(tao("th", c)); }); b.appendChild(hd);
       ds.forEach(function (m) { var tr = tao("tr"); lay(m).forEach(function (c) { tr.appendChild(tao("td", String(c))); }); b.appendChild(tr); });
     }
-    if ((d.tuCham || []).length) { bang("tu-cham", ["Đề giấy", "Ngày", "Điểm con tự chấm"], d.tuCham, function (m) { return [m.ten, m.ngay, m.diem + " trên 100"]; }); hien("s-tu"); }
+    if ((d.tuCham || []).length) { bang("tu-cham", ["Đề giấy", "Ngày", "Điểm bạn tự chấm"], d.tuCham, function (m) { return [m.ten, m.ngay, m.diem + " trên 100"]; }); hien("s-tu"); }
     if ((d.nhatKy || []).length) { bang("nhat-ky", ["Ngày", "Bài", "Kết quả", "Ghi chú"], d.nhatKy, function (m) { return [m.ngay, m.bai, m.ketQua, m.ghiChu || ""]; }); hien("s-nhat-ky"); }
     if (d.loiNhan) { $("loi-nhan").textContent = d.loiNhan; hien("s-loi"); }
-    $("chan").textContent = "Hồ sơ chỉ so con với chính con và với đích của con. Trạm Tư Duy không xếp hạng các bạn trong lớp.";
+    $("chan").textContent = "Hồ sơ chỉ so bạn với chính bạn và với đích của bạn. Trạm Tư Duy không xếp hạng các bạn trong lớp.";
   }
 
   function chiTiet(c) {
     var o = $("chi-tiet"); o.textContent = ""; o.hidden = false;
     var h = tao("h3"); h.appendChild(cham(c.trangThai)); h.appendChild(document.createTextNode(" " + c.ten)); o.appendChild(h);
     o.appendChild(tao("p", TT[c.trangThai].ten + ". " + TT[c.trangThai].giai));
-    o.appendChild(tao("p", "Học ở tuần " + c.tuan + ". " + (c.soCau ? "Căn cứ: con làm đúng " + c.dung + " trên " + c.soCau + " câu, lần gần nhất ở tuần " + c.lanCuoi + "." : "Chưa có câu nào để làm căn cứ.")));
+    o.appendChild(tao("p", "Học ở tuần " + c.tuan + ". " + (c.soCau ? "Căn cứ: bạn làm đúng " + c.dung + " trên " + c.soCau + " câu, lần gần nhất ở tuần " + c.lanCuoi + "." : "Chưa có câu nào để làm căn cứ.")));
     if (c.soCau && c.soCau < 4) o.appendChild(tao("p", "Số câu còn ít nên kết luận này chưa chắc chắn."));
     if (c.goiY) o.appendChild(tao("p", "Việc nên làm: " + c.goiY));
   }
@@ -275,7 +275,7 @@
     });
     var dau = ds[0].diem, cuoi = ds[ds.length - 1].diem;
     $("diem-phu").textContent = ds.length > 1
-      ? "Từ " + ds[0].ten + " đến " + ds[ds.length - 1].ten + ", điểm của con " + (cuoi >= dau ? "tăng " + (cuoi - dau) : "giảm " + (dau - cuoi)) + " điểm. Thang điểm 100."
+      ? "Từ " + ds[0].ten + " đến " + ds[ds.length - 1].ten + ", điểm của bạn " + (cuoi >= dau ? "tăng " + (cuoi - dau) : "giảm " + (dau - cuoi)) + " điểm. Thang điểm 100."
       : "Thang điểm 100.";
     var b = $("bang-diem"), hd = tao("tr"); ["Bài", "Ngày", "Điểm"].forEach(function (c) { hd.appendChild(tao("th", c)); }); b.appendChild(hd);
     ds.forEach(function (m) { var tr = tao("tr"); [m.ten, m.ngay, m.diem].forEach(function (c) { tr.appendChild(tao("td", String(c))); }); b.appendChild(tr); });

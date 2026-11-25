@@ -139,6 +139,13 @@
   var $ = function (id) { return document.getElementById(id); };
   var thamSo = new URLSearchParams(location.search);
   var maDe = thamSo.get("de") || "", maRieng = thamSo.get("ma") || "";
+  // Mã riêng: đường dẫn riêng cô gửi có ?ma=…; trang nhớ mã trên máy này, để đường dẫn và mã QR in trên phiếu
+  // (chỉ có ?de=…) mở được đúng bài của bạn.
+  var KHOA_MA = "luyende-ma";
+  try {
+    if (/^[a-z0-9]{24,64}$/.test(maRieng)) localStorage.setItem(KHOA_MA, maRieng);
+    else maRieng = localStorage.getItem(KHOA_MA) || "";
+  } catch (e) { /* trình duyệt chặn lưu: vẫn dùng mã trên đường dẫn */ }
   var tt = null;              // trạng thái lượt thi
   var lechGio = 0;            // giờ máy chủ trừ giờ máy bạn
   var dangThi = false, dangNop = false, henGio = null, henLuu = null, tep = {}, daNopTruoc = false;
@@ -180,9 +187,12 @@
     return hai(d.getHours()) + ":" + hai(d.getMinutes()) + " ngày " + hai(d.getDate()) + "/" + hai(d.getMonth() + 1) + "/" + d.getFullYear();
   }
   $("nut-vao").disabled = true;
-  if (!/^[a-z0-9-]+$/.test(maDe) || !/^[a-z0-9]{24,64}$/.test(maRieng)) {
+  if (!/^[a-z0-9-]+$/.test(maDe)) {
     $("mo-ta").textContent = "";
     baoLoiVao("Đường dẫn chưa đúng. Bạn mở đúng đường dẫn riêng cô gửi cho gia đình nhé."); $("nut-vao").disabled = true;
+  } else if (!/^[a-z0-9]{24,64}$/.test(maRieng)) {
+    $("mo-ta").textContent = "";
+    baoLoiVao("Máy này chưa nhớ mã của bạn. Bạn mở đường dẫn riêng cô gửi cho gia đình một lần trên máy này, rồi quét lại mã QR trên phiếu nhé."); $("nut-vao").disabled = true;
   } else {
     goi("vao").then(function (d) {
       $("ten-de").textContent = d.tieuDe; document.title = d.tieuDe + " – Trạm Tư Duy";
